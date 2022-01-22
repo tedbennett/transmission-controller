@@ -28,50 +28,113 @@ Run the project in a dev environment with `cargo run`
 
 ## API
 
-### GET /vpn
+### Check VPN status
 
-Returns:
+**Definition**
 
-```json
-{
-    "is_connected": bool
-}
-```
+`GET /vpn`
 
-### GET /torrents
+**Response**
 
-Returns:
+- `200 OK` on success
 
 ```json
 {
-    "torrents": [Torrent]
+  "is_connected": true
 }
 ```
 
-where Torrent is:
+### List of torrents
+
+**Definition**
+
+`GET /torrents`
+
+**Response**
+
+- `200 OK` on success
 
 ```json
-{
-    "id": string,
-    "name": string,
-    "state": string,
-    "eta": string,
-    "percent": string,
-    "download_speed": string,
-    "upload_speed": string,
-    "size": string,
-    "downloaded": string,
-}
+[
+  {
+    "id": "1",
+    "name": "Cowboy Bebop",
+    "state": "Downloading",
+    "eta": "3 Hours",
+    "percent": "3.5%",
+    "download_speed": "10 MB/s",
+    "upload_speed": "0 kB/s",
+    "size": "10.92 GB",
+    "downloaded": "1.27 GB"
+  }
+]
 ```
 
-### PUT /torrents
+### Add a torrent
 
-Adds a torrent
+**Definition**
 
-Body:
+`PUT /torrents`
 
-```json
-{
-    "magnet": string
-}
-```
+**Arguments**
+
+- `"magnet": string` a valid magnet link
+
+**Response**
+
+- `204 No Content` on success
+
+### Start all torrents
+
+**Definition**
+
+`PUT /torrents/start`
+
+**Response**
+
+- `204 No Content` on success
+
+### Stop all torrents
+
+**Definition**
+
+`PUT /torrents/stop`
+
+**Response**
+
+- `204 No Content` on success
+
+### Start a torrent
+
+**Definition**
+
+`PUT /torrents/start/<id>`
+
+**Response**
+
+- `204 No Content` on success
+
+### Stop a torrent
+
+**Definition**
+
+`PUT /torrents/stop/<id>`
+
+**Response**
+
+- `204 No Content` on success
+
+### Move a torrent destination
+
+**Definition**
+
+`PUT /torrents/move`
+
+**Arguments**
+
+- `"id": string` the torrent id
+- `"destination": string` the destination type, at the moment either `tv` or `movies`
+
+**Response**
+
+- `204 No Content` on success
