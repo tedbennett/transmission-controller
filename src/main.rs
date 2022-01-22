@@ -1,3 +1,5 @@
+use std::process::Command;
+
 #[macro_use]
 extern crate rocket;
 extern crate dotenv;
@@ -7,8 +9,16 @@ mod config;
 mod routes;
 mod torrent;
 
+fn check_transmission_installed() -> bool {
+    Command::new("transmission-daemon").output().is_ok()
+}
+
 #[launch]
 fn rocket() -> _ {
+    if !check_transmission_installed() {
+        println!("Failed to launch transmission-daemon");
+        std::process::exit(1);
+    }
     let config = match config::parse_config() {
         Some(config) => config,
         None => {
