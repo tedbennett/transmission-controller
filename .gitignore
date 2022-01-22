@@ -1,2 +1,4 @@
-/target
-config.json
+api/target
+api/config.json
+client/build
+client/node_modules
