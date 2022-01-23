@@ -61,7 +61,7 @@ pub fn get_torrents() -> Option<Json<TorrentListResponse>> {
     Some(Json(TorrentListResponse { torrents }))
 }
 
-#[put("/", data = "<data>")]
+#[post("/", data = "<data>")]
 pub async fn add_torrent(
     config: &State<Config>,
     data: Json<AddTorrentRequest>,

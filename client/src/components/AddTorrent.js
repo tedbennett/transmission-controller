@@ -8,7 +8,14 @@ const AddTorrent = () => {
   const [magnet, setManget] = useState("");
 
   const addTorrent = () => {
-    fetch("/torrent", { method: "POST", body: JSON.stringify({ magnet }) });
+    fetch("/torrents", {
+      method: "POST",
+      body: JSON.stringify({ magnet }),
+      headers: {
+        "Content-Type": "application/json",
+        // 'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
   };
 
   const updateMagnet = (e) => setManget(e.target.value);
